@@ -1,13 +1,16 @@
-import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
-import './index.css'
-import { RouterProvider } from 'react-router'
-import { router } from './router/Routes.jsx'
+import { StrictMode } from "react";
+import { createRoot } from "react-dom/client";
+import "./index.css";
+import { RouterProvider } from "react-router";
+import { router } from "./router/Routes.jsx";
+import AuthProvider from "./Authentication/AuthProvider.jsx";
 
-createRoot(document.getElementById('root')).render(
+createRoot(document.getElementById("root")).render(
   <StrictMode>
-    <div className='max-w-7xl mx-auto'>
-      <RouterProvider router={router}></RouterProvider>
-    </div>
+    <AuthProvider>
+
+        <RouterProvider router={router}></RouterProvider>
+      
+    </AuthProvider>
   </StrictMode>
 );
