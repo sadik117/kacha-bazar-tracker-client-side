@@ -6,7 +6,7 @@ import { Link, NavLink } from "react-router";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const { user, logout } = useContext(AuthContext);
+  const { user, logOut } = useContext(AuthContext);
 
   const [darkMode, setDarkMode] = useState(
     localStorage.getItem("theme") === "dark"
@@ -80,14 +80,14 @@ const Navbar = () => {
                 alt="Profile"
                 className="w-9 h-9 rounded-full ring ring-primary ring-offset-2"
               />
-              <button onClick={logout} className="btn btn-sm btn-outline text-primary hover:bg-primary hover:text-white">
+              <button onClick={logOut} className="btn btn-sm btn-outline text-primary hover:bg-primary hover:text-white">
                 Logout
               </button>
             </>
           ) : (
             <>
-              <NavLink to="/login" className="btn btn-sm btn-ghost text-black">Login</NavLink>
-              <NavLink to="/signup" className="btn btn-sm btn-primary text-white">Sign Up</NavLink>
+              <NavLink to="/auth/login" className="btn btn-sm btn-ghost text-black">Login</NavLink>
+              <NavLink to="/auth/signup" className="btn btn-sm btn-primary text-white">Sign Up</NavLink>
             </>
           )}
 
