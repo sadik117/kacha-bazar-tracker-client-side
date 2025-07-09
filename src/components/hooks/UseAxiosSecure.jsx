@@ -12,7 +12,6 @@ const useAxiosSecure = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    // ✅ Attach JWT token to every request
     const requestInterceptor = axiosSecure.interceptors.request.use(
       (config) => {
         const token = localStorage.getItem("access-token");
@@ -29,7 +28,7 @@ const useAxiosSecure = () => {
       (response) => response,
       (error) => {
         if (error.response && error.response.status === 401) {
-          navigate("/login");
+          navigate("/auth/login");
         }
         return Promise.reject(error);
       }

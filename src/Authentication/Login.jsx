@@ -5,59 +5,54 @@ import Lottie from "lottie-react";
 import loginAnimation from "../assets/login.json";
 import { AuthContext } from "./AuthProvider";
 import { Link, useLocation, useNavigate } from "react-router";
-import { Helmet } from "react-helmet-async";
 import SocialLogin from "./SocialLogin";
+import useAxios from "../components/hooks/useAxios";
+
 
 export default function Login() {
-  const { setUser, signIn, googleSignIn } = useContext(AuthContext);
+  const { setUser, signIn } = useContext(AuthContext);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
   const location = useLocation();
+  const axios = useAxios();
+
+  const from = location.state?.from || "/";
 
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      await signIn(email, password);
-      toast.success("Login successful!");
-      navigate(location.state || "/");
-    } catch (error) {
-      toast.error("Login failed!");
-    }
-  };
+      const result = await signIn(email, password);
+      const user = result.user;
 
-  const handleGoogleSignIn = (e) => {
-    e.preventDefault();
-    googleSignIn()
-      .then((result) => {
-        const user = result.user;
-        setUser(user);
-        navigate(location.state || "/");
-        toast.success("Google Sign-In successful!");
-      })
-      .catch(() => {
-        toast.error("Google Sign-In failed!");
-      });
+      // Request JWT from your backend for this user
+      const { data } = await axios.post("/jwt", { email: user.email });
+
+      if (data.token) {
+        localStorage.setItem("access-token", data.token);   
+      }
+       console.log("Saved JWT token:", data.token);
+
+      setUser(user);
+      toast.success("Login successful!");
+      navigate(from);
+    } catch (error) {
+      toast.error("Login failed! " + error.message);
+    }
   };
 
   return (
     <div className="min-h-screen py-20 mx-2 md:mx-10 mt-5 md:mt-10 bg-gradient-to-br from-[#0f2a0f] to-[#1a3827] flex items-center justify-center px-4">
-      {/* <Helmet>
-        <title>Login || Kacha Bazar</title>
-      </Helmet> */}
-
       <motion.div
         className="bg-white/10 backdrop-blur-md rounded-2xl shadow-2xl p-6 md:p-8 w-full max-w-4xl border border-white/20 flex flex-col md:flex-row gap-6 items-center"
         initial={{ y: 100, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ type: "spring", stiffness: 80 }}
       >
-        {/* Lottie Animation Section */}
         <div className="w-full md:w-1/2 md:block">
           <Lottie animationData={loginAnimation} loop={true} />
         </div>
 
-        {/* Login Form Section */}
         <div className="w-full md:w-1/2">
           <h2 className="text-white text-3xl font-bold text-center mb-6">
             Welcome Back
