@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useState } from "react";
 import { NavLink, Outlet } from "react-router-dom";
 import { FiMenu, FiX } from "react-icons/fi";
 import useUserRole from "../hooks/useUserRole";
@@ -6,13 +6,12 @@ import useUserRole from "../hooks/useUserRole";
 const DashboardLayout = () => {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const { role } = useUserRole();
-    console.log(role);
-
+  
   const toggleDrawer = () => setIsDrawerOpen(!isDrawerOpen);
   const closeDrawer = () => setIsDrawerOpen(false);
 
   return (
-    <div className="min-h-screen flex flex-col md:flex-row bg-gray-100 dark:bg-gray-900">
+    <div className="min-h-full mx-2 md:mx-10 flex flex-col md:flex-row bg-gray-100 dark:bg-gray-900">
       {/* 🔘 Mobile Topbar */}
       <div
         className={`md:hidden sticky top-0 z-50 bg-gray-100 dark:bg-gray-900 p-3 border-b border-gray-300 dark:border-gray-700 flex items-center gap-2 ${
@@ -54,7 +53,7 @@ const DashboardLayout = () => {
           </button>
         </div>
 
-        <h2 className="text-xl font-bold mb-4 text-gray-800 dark:text-gray-100">
+        <h2 className="text-xl font-bold mt-5 md:mt-0 mb-4 text-gray-800 dark:text-gray-100 border p-1">
           Dashboard
         </h2>
 

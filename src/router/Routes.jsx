@@ -6,6 +6,11 @@ import ErrorPage from "../pages/ErrorPage";
 import Home from "../components/layouts/Home";
 import PrivateRoute from "./PrivateRoute";
 import UserDashboard from "../components/Dashboard/DashboardLayout";
+import AddProduct from "../pages/VendorPages/AddProduct";
+import ForbiddenPage from "../pages/ForbiddenPage";
+import VendorRoute from "./VendorRoute";
+import MyProducts from "../pages/VendorPages/MyProducts";
+import UpdateProduct from "../pages/VendorPages/UpdateProduct";
 
 
 export const router = createBrowserRouter([
@@ -32,10 +37,37 @@ export const router = createBrowserRouter([
         ],
       },
       {
+        path: "/forbidden",
+        Component: ForbiddenPage
+      },
+      {
         path: "/dashboard",
         element: <PrivateRoute>
           <UserDashboard></UserDashboard>
-        </PrivateRoute>
+        </PrivateRoute>,
+        children:[
+          {
+            path: "add-product",
+            element: 
+            <VendorRoute>
+              <AddProduct></AddProduct>
+            </VendorRoute>
+         },
+          {
+            path: "my-products",
+            element: 
+            <VendorRoute>
+              <MyProducts></MyProducts>
+            </VendorRoute>
+         },
+          {
+            path: "update-product/:id",
+            element: 
+            <VendorRoute>
+              <UpdateProduct></UpdateProduct>
+            </VendorRoute>
+         },
+        ]
       },
     ],
   },
