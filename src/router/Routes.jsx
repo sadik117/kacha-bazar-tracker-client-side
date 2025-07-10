@@ -11,6 +11,8 @@ import ForbiddenPage from "../pages/ForbiddenPage";
 import VendorRoute from "./VendorRoute";
 import MyProducts from "../pages/VendorPages/MyProducts";
 import UpdateProduct from "../pages/VendorPages/UpdateProduct";
+import AddAdvertisement from "../pages/VendorPages/AddAdvertisement";
+import MyAdvertisements from "../pages/VendorPages/MyAdvertisements";
 
 
 export const router = createBrowserRouter([
@@ -65,6 +67,20 @@ export const router = createBrowserRouter([
             element: 
             <VendorRoute>
               <UpdateProduct></UpdateProduct>
+            </VendorRoute>
+         },
+          {
+            path: "add-advertisement",
+            element: 
+            <VendorRoute>
+              <AddAdvertisement></AddAdvertisement>
+            </VendorRoute>
+         },
+          {
+            path: "my-ads",
+            element: 
+            <VendorRoute>
+              <MyAdvertisements></MyAdvertisements>
             </VendorRoute>
          },
         ]
