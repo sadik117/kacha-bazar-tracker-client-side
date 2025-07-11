@@ -81,7 +81,14 @@ const MyProducts = () => {
                   <td>৳{p.pricePerUnit}</td>
                   <td>{p.marketName}</td>
                   <td>{p.date}</td>
-                  <td>{p.status}</td>
+                  <td>
+                    <span className="capitalize">{p.status}</span>
+                    {p.status === "rejected" && p.rejectionReason && (
+                      <div className="text-xs text-red-500 mt-1 italic">
+                        Reason: {p.rejectionReason}
+                      </div>
+                    )}
+                  </td>
                   <td className="space-x-2">
                     <Link
                       to={`/dashboard/update-product/${p._id}`}

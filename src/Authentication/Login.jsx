@@ -31,7 +31,7 @@ export default function Login() {
       if (data.token) {
         localStorage.setItem("access-token", data.token);   
       }
-       console.log("Saved JWT token:", data.token);
+      //  console.log("Saved JWT token:", data.token);
 
       setUser(user);
       toast.success("Login successful!");

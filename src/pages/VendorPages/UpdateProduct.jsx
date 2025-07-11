@@ -9,6 +9,7 @@ import useAxiosSecure from "../../components/hooks/UseAxiosSecure";
 import { AuthContext } from "../../Authentication/AuthProvider";
 import { motion } from "framer-motion";
 import axios from "axios";
+import useUserRole from "../../components/hooks/useUserRole";
 
 const UpdateProduct = () => {
   const { id } = useParams();
@@ -16,6 +17,7 @@ const UpdateProduct = () => {
   const { user } = useContext(AuthContext);
   const axiosSecure = useAxiosSecure();
   const [uploading, setUploading] = useState(false);
+  const { role } = useUserRole();
 
   const {
     register,
@@ -74,7 +76,9 @@ const UpdateProduct = () => {
     try {
       setUploading(true);
       const res = await axios.post(
-        `https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_IMGBB_API_KEY}`,
+        `https://api.imgbb.com/1/upload?key=${
+          import.meta.env.VITE_IMGBB_API_KEY
+        }`,
         formData
       );
       setUploading(false);
@@ -99,7 +103,11 @@ const UpdateProduct = () => {
 
       if (res.data.modifiedCount > 0) {
         toast.success("Product updated successfully!");
-        navigate("/dashboard/my-products");
+        if (role === "admin") {
+          navigate("/dashboard/all-products");
+        } else {
+          navigate("/dashboard/my-products");
+        }
       } else {
         toast.error("No changes were made.");
       }
@@ -110,17 +118,37 @@ const UpdateProduct = () => {
   };
 
   return (
-    <motion.div className="max-w-4xl mx-auto p-2" initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
+    <motion.div
+      className="max-w-4xl mx-auto p-2"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+    >
       <div className="card bg-base-100 shadow-md p-6 space-y-4">
         <h2 className="text-2xl font-bold text-primary">Update Product</h2>
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
           <div className="grid md:grid-cols-2 gap-4">
-            <input {...register("email")} readOnly className="input input-bordered w-full" />
-            <input {...register("vendorName")} readOnly className="input input-bordered w-full" />
+            <input
+              {...register("email")}
+              readOnly
+              className="input input-bordered w-full"
+            />
+            <input
+              {...register("vendorName")}
+              readOnly
+              className="input input-bordered w-full"
+            />
           </div>
 
-          <input {...register("marketName", { required: true })} className="input input-bordered w-full" placeholder="Market Name" />
-          <textarea {...register("marketDescription", { required: true })} className="textarea textarea-bordered w-full" placeholder="Market Description" />
+          <input
+            {...register("marketName", { required: true })}
+            className="input input-bordered w-full"
+            placeholder="Market Name"
+          />
+          <textarea
+            {...register("marketDescription", { required: true })}
+            className="textarea textarea-bordered w-full"
+            placeholder="Market Description"
+          />
 
           <div>
             <label className="font-medium mr-2">Market Date</label>
@@ -132,9 +160,22 @@ const UpdateProduct = () => {
             />
           </div>
 
-          <input {...register("itemName", { required: true })} className="input input-bordered w-full" placeholder="Item Name" />
-          <input {...register("pricePerUnit", { required: true })} type="number" className="input input-bordered w-full" placeholder="Price per unit" />
-          <textarea {...register("itemDescription")} className="textarea textarea-bordered w-full" placeholder="Item Description" />
+          <input
+            {...register("itemName", { required: true })}
+            className="input input-bordered w-full"
+            placeholder="Item Name"
+          />
+          <input
+            {...register("pricePerUnit", { required: true })}
+            type="number"
+            className="input input-bordered w-full"
+            placeholder="Price per unit"
+          />
+          <textarea
+            {...register("itemDescription")}
+            className="textarea textarea-bordered w-full"
+            placeholder="Item Description"
+          />
 
           <div>
             <label className="font-medium">Upload Product Image</label>
@@ -147,7 +188,9 @@ const UpdateProduct = () => {
                 if (url) setValue("image", url);
               }}
             />
-            {uploading && <p className="text-sm text-warning mt-1">Uploading image...</p>}
+            {uploading && (
+              <p className="text-sm text-warning mt-1">Uploading image...</p>
+            )}
           </div>
 
           <div>
@@ -166,15 +209,29 @@ const UpdateProduct = () => {
                   className="input input-bordered w-full"
                   placeholder="৳ Price"
                 />
-                <button type="button" className="btn btn-sm btn-error" onClick={() => remove(index)}>Remove</button>
+                <button
+                  type="button"
+                  className="btn btn-sm btn-error"
+                  onClick={() => remove(index)}
+                >
+                  Remove
+                </button>
               </div>
             ))}
-            <button type="button" className="btn btn-sm btn-outline" onClick={() => append({ date: new Date(), price: "" })}>
+            <button
+              type="button"
+              className="btn btn-sm btn-outline"
+              onClick={() => append({ date: new Date(), price: "" })}
+            >
               ➕ Add More Entry
             </button>
           </div>
 
-          <button type="submit" className="btn btn-primary w-full text-white mt-4" disabled={uploading}>
+          <button
+            type="submit"
+            className="btn btn-primary w-full text-white mt-4"
+            disabled={uploading}
+          >
             Update Product
           </button>
         </form>

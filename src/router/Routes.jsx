@@ -101,7 +101,7 @@ export const router = createBrowserRouter([
           </AdminRoute>
          },
          {
-          path: "all-advertisements",
+          path: "all-ads",
           element: <AdminRoute>
             <AllAdvertisements></AllAdvertisements>
           </AdminRoute>

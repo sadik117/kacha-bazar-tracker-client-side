@@ -91,7 +91,7 @@ const AllProducts = () => {
                   </span>
                 </td>
                 <td>{p.rejectionReason || "-"}</td>
-                <td className="space-x-2">
+                <td className="space-x-2 space-y-1 grid md:grid-cols-2">
                   {p.status === "pending" && (
                     <>
                       <button onClick={() => handleApprove(p._id)} className="btn btn-xs btn-success">Approve</button>
@@ -99,7 +99,7 @@ const AllProducts = () => {
                     </>
                   )}
                   <Link to={`/dashboard/update-product/${p._id}`} className="btn btn-xs btn-info">Update</Link>
-                  <button onClick={() => handleDelete(p._id)} className="btn btn-xs btn-outline btn-error">Delete</button>
+                  <button onClick={() => handleDelete(p._id)} className="btn btn-xs btn-outline btn-error w-15 md:w-26">Delete</button>
                 </td>
               </tr>
             ))}
