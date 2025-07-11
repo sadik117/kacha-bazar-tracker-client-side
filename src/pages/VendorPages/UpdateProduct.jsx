@@ -95,7 +95,7 @@ const UpdateProduct = () => {
       }));
       data.pricePerUnit = Number(data.pricePerUnit);
 
-      const res = await axiosSecure.patch(`/products/${id}`, data);
+      const res = await axiosSecure.put(`/products/${id}`, data);
 
       if (res.data.modifiedCount > 0) {
         toast.success("Product updated successfully!");
