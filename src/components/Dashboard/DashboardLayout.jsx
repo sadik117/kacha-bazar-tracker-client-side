@@ -1,7 +1,7 @@
 import { useState } from "react";
-import { NavLink, Outlet } from "react-router-dom";
 import { FiMenu, FiX } from "react-icons/fi";
 import useUserRole from "../hooks/useUserRole";
+import { NavLink, Outlet } from "react-router";
 
 const DashboardLayout = () => {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);

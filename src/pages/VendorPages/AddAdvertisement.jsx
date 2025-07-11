@@ -1,23 +1,32 @@
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import useAxiosSecure from "../../components/hooks/UseAxiosSecure";
 import axios from "axios";
+import { AuthContext } from "../../Authentication/AuthProvider";
 
 const AddAdvertisement = ({ onClose, refetch, defaultValues = {}, isEdit = false }) => {
-  const { register, handleSubmit, setValue, reset, formState: { errors } } = useForm({
+  const { user } = useContext(AuthContext);
+  const axiosSecure = useAxiosSecure();
+  const [uploading, setUploading] = useState(false);
+
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    reset,
+    formState: { errors },
+  } = useForm({
     defaultValues: {
       title: "",
       description: "",
       image: "",
       status: "pending",
+      email: user?.email || "",
     },
   });
 
-  const [uploading, setUploading] = useState(false);
-  const axiosSecure = useAxiosSecure();
-
-  // Reset form with default values when modal opens
+  // Reset form values when defaultValues change
   useEffect(() => {
     if (defaultValues && Object.keys(defaultValues).length > 0) {
       reset({
@@ -25,9 +34,15 @@ const AddAdvertisement = ({ onClose, refetch, defaultValues = {}, isEdit = false
         description: defaultValues.description || "",
         image: defaultValues.image || "",
         status: defaultValues.status || "pending",
+        email: defaultValues.email || user?.email || "",
+      });
+    } else {
+      reset({
+        email: user?.email || "",
+        status: "pending",
       });
     }
-  }, [defaultValues, reset]);
+  }, [defaultValues, reset, user]);
 
   const uploadImage = async (file) => {
     const formData = new FormData();
@@ -66,22 +81,34 @@ const AddAdvertisement = ({ onClose, refetch, defaultValues = {}, isEdit = false
       } else {
         const res = await axiosSecure.post("/ads", {
           ...data,
-          status: "pending", // enforce default
+          email: user.email,
+          status: "pending",
         });
         if (res.data.insertedId) {
           toast.success("Advertisement created");
+          reset();
           refetch?.();
           onClose?.();
         }
       }
     } catch (err) {
       console.error(err);
-      toast.error("❌ Error saving advertisement");
+      toast.error("Error saving advertisement");
     }
   };
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-3 p-4">
+      {/* Vendor Email */}
+      <input
+        {...register("email")}
+        readOnly
+        value={user?.email || ""}
+        className="input input-bordered w-full"
+        placeholder="Vendor Email"
+      />
+
+      {/* Title */}
       <input
         {...register("title", { required: "Title is required" })}
         placeholder="Ad Title"
@@ -89,6 +116,7 @@ const AddAdvertisement = ({ onClose, refetch, defaultValues = {}, isEdit = false
       />
       {errors.title && <p className="text-red-500 text-sm">{errors.title.message}</p>}
 
+      {/* Description */}
       <textarea
         {...register("description", { required: "Description is required" })}
         placeholder="Short Description"
@@ -96,6 +124,7 @@ const AddAdvertisement = ({ onClose, refetch, defaultValues = {}, isEdit = false
       />
       {errors.description && <p className="text-red-500 text-sm">{errors.description.message}</p>}
 
+      {/* Image Upload */}
       <input
         type="file"
         accept="image/*"
@@ -108,6 +137,7 @@ const AddAdvertisement = ({ onClose, refetch, defaultValues = {}, isEdit = false
       />
       {uploading && <p className="text-yellow-500 text-sm">Uploading image...</p>}
 
+      {/* Submit */}
       <button type="submit" className="btn btn-primary w-full mt-2" disabled={uploading}>
         {isEdit ? "Update Advertisement" : "Create Advertisement"}
       </button>

@@ -13,13 +13,18 @@ import MyProducts from "../pages/VendorPages/MyProducts";
 import UpdateProduct from "../pages/VendorPages/UpdateProduct";
 import AddAdvertisement from "../pages/VendorPages/AddAdvertisement";
 import MyAdvertisements from "../pages/VendorPages/MyAdvertisements";
+import AdminRoute from "./AdminRoute";
+import AllUsers from "../pages/AdminPages/AllUsers";
+import AllProducts from "../pages/AdminPages/AllProducts";
+import AllAdvertisements from "../pages/AdminPages/AllAdvertisements";
+import AllOrders from "../pages/AdminPages/AllOrders";
 
 
 export const router = createBrowserRouter([
   {
     path: "/",
-    Component: Mainlayout,
-    errorElement: ErrorPage,
+    element: <Mainlayout></Mainlayout>,
+    errorElement: <ErrorPage></ErrorPage>,
     children: [
       {
         index: true,
@@ -82,6 +87,30 @@ export const router = createBrowserRouter([
             <VendorRoute>
               <MyAdvertisements></MyAdvertisements>
             </VendorRoute>
+         },
+         {
+          path: "all-users",
+          element: <AdminRoute>
+            <AllUsers></AllUsers>
+          </AdminRoute>
+         },
+         {
+          path: "all-products",
+          element: <AdminRoute>
+            <AllProducts></AllProducts>
+          </AdminRoute>
+         },
+         {
+          path: "all-advertisements",
+          element: <AdminRoute>
+            <AllAdvertisements></AllAdvertisements>
+          </AdminRoute>
+         },
+         {
+          path: "all-orders",
+          element: <AdminRoute>
+            <AllOrders></AllOrders>
+          </AdminRoute>
          },
         ]
       },
