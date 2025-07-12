@@ -18,6 +18,7 @@ import AllUsers from "../pages/AdminPages/AllUsers";
 import AllProducts from "../pages/AdminPages/AllProducts";
 import AllAdvertisements from "../pages/AdminPages/AllAdvertisements";
 import AllOrders from "../pages/AdminPages/AllOrders";
+import Products from "../pages/Products";
 
 
 export const router = createBrowserRouter([
@@ -46,6 +47,10 @@ export const router = createBrowserRouter([
       {
         path: "/forbidden",
         Component: ForbiddenPage
+      },
+      {
+        path: "/products",
+        Component: Products
       },
       {
         path: "/dashboard",

@@ -1,4 +1,3 @@
-// src/pages/VendorPages/MyProducts.jsx
 import React, { useContext } from "react";
 import { AuthContext } from "../../Authentication/AuthProvider";
 import { Link } from "react-router-dom";
