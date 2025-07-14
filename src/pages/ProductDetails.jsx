@@ -79,7 +79,7 @@ const ProductDetails = () => {
         price: product.pricePerUnit,
       });
 
-      window.location.href = res.data.url; // Redirect to Stripe Checkout
+      window.location.href = res.data.url;
     } catch {
       toast.error("Payment initiation failed");
     }
