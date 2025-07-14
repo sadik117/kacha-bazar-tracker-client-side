@@ -1,10 +1,10 @@
 import React, { useContext } from "react";
 import { AuthContext } from "../../Authentication/AuthProvider";
-import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
 import { toast } from "react-toastify";
 import useAxiosSecure from "../../components/hooks/UseAxiosSecure";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { Link } from "react-router";
 
 const MyProducts = () => {
   const { user } = useContext(AuthContext);

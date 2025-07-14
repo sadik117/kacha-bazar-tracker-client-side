@@ -2,16 +2,20 @@ import { useState } from "react";
 import { FiMenu, FiX } from "react-icons/fi";
 import useUserRole from "../hooks/useUserRole";
 import { NavLink, Outlet } from "react-router";
+import { Helmet } from "react-helmet-async";
 
 const DashboardLayout = () => {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const { role } = useUserRole();
-  
+
   const toggleDrawer = () => setIsDrawerOpen(!isDrawerOpen);
   const closeDrawer = () => setIsDrawerOpen(false);
 
   return (
     <div className="min-h-full mx-2 md:mx-10 flex flex-col md:flex-row bg-gray-100 dark:bg-gray-900">
+      <Helmet>
+        <title>KachaBazar || Dashboard</title>
+      </Helmet>
       {/* 🔘 Mobile Topbar */}
       <div
         className={`md:hidden sticky top-0 z-50 bg-gray-100 dark:bg-gray-900 p-3 border-b border-gray-300 dark:border-gray-700 flex items-center gap-2 ${
@@ -53,7 +57,7 @@ const DashboardLayout = () => {
           </button>
         </div>
 
-        <h2 className="text-xl font-bold mt-5 md:mt-0 mb-4 text-gray-800 dark:text-gray-100 border p-1">
+        <h2 className="text-xl font-bold mt-5 md:mt-0 mb-4 text-gray-800 dark:text-gray-100 border rounded-md p-1">
           Dashboard
         </h2>
 

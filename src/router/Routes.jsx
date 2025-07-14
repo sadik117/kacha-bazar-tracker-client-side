@@ -26,6 +26,7 @@ import ProductDetails from "../pages/ProductDetails";
 import PaymentSuccess from "../pages/PaymentSuccess";
 import AddOffer from "../pages/AdminPages/AddOffer";
 import Offers from "../pages/Offers";
+import DashboardHome from "../components/Dashboard/DashboardHome";
 
 
 export const router = createBrowserRouter([
@@ -79,6 +80,10 @@ export const router = createBrowserRouter([
           <UserDashboard></UserDashboard>
         </PrivateRoute>,
         children:[
+          {
+            index: true,
+            Component: DashboardHome
+          },
           {
             path: "add-product",
             element: 
