@@ -5,6 +5,7 @@ import { AuthContext } from "../../Authentication/AuthProvider";
 import AddAdvertisement from "./AddAdvertisement";
 import { toast } from "react-toastify";
 import Swal from "sweetalert2";
+import { Helmet } from "react-helmet-async";
 
 const MyAdvertisements = () => {
   const { user } = useContext(AuthContext);
@@ -50,6 +51,9 @@ const MyAdvertisements = () => {
 
   return (
     <div className="p-4 max-w-6xl mx-auto">
+      <Helmet>
+        <title>Vendor Dashboard || My Advertisements</title>
+      </Helmet>
       <h2 className="text-3xl font-bold mb-6 text-center">
         📢 My Advertisements
       </h2>

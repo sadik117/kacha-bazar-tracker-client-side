@@ -3,6 +3,7 @@ import { toast } from "react-toastify";
 import { useContext } from "react";
 import { AuthContext } from "../../Authentication/AuthProvider";
 import AddProductForm from "./AddProductForm";
+import { Helmet } from "react-helmet-async";
 
 const AddProduct = () => {
   const { user } = useContext(AuthContext);
@@ -42,7 +43,18 @@ const AddProduct = () => {
     }
   };
 
-  return <AddProductForm onSubmit={onSubmit} defaultValues={defaultValues} isEdit={false} />;
+  return (
+    <>
+      <Helmet>
+        <title>Vendor Dashboard || Add Product</title>
+      </Helmet>{" "}
+      <AddProductForm
+        onSubmit={onSubmit}
+        defaultValues={defaultValues}
+        isEdit={false}
+      />
+    </>
+  );
 };
 
 export default AddProduct;

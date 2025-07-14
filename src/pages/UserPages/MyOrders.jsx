@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../Authentication/AuthProvider";
 import useAxiosSecure from "../../components/hooks/UseAxiosSecure";
 import Loading from "../Loading";
+import { Helmet } from "react-helmet-async";
 
 const MyOrders = () => {
   const { user } = useContext(AuthContext);
@@ -19,10 +20,13 @@ const MyOrders = () => {
     enabled: !!user?.email, // don't run until email is ready
   });
 
-  if (isLoading) return <Loading></Loading> ;
+  if (isLoading) return <Loading></Loading>;
 
   return (
     <div className="max-w-6xl mx-auto p-4">
+      <Helmet>
+        <title>User Dashboard || My Orders</title>
+      </Helmet>
       <h2 className="text-2xl font-bold mb-4">🧾 My Orders</h2>
 
       {orders.length === 0 ? (

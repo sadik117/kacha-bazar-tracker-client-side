@@ -7,6 +7,7 @@ import { format } from "date-fns";
 import useAxios from "../components/hooks/useAxios";
 import { AuthContext } from "../Authentication/AuthProvider";
 import Loading from "./Loading";
+import { Helmet } from "react-helmet-async";
 
 const Products = () => {
   const axiosInstance = useAxios();
@@ -40,7 +41,14 @@ const Products = () => {
 
   return (
     <>
-      <h2 className="text-2xl font-bold mb-2 justify-center items-center ml-6 md:ml-13 mt-6">🛍️ All Products</h2>
+      <Helmet>
+        <title>KachaBazar || All Products</title>
+      </Helmet>
+      
+      <h2 className="text-2xl font-bold mb-2 justify-center items-center ml-6 md:ml-13 mt-6">
+        🛍️ All Products
+      </h2>
+      
       <div className="max-w-6xl mx-2 md:mx-10 p-4 text-gray-800 dark:text-gray-100">
         {/* Filters */}
         <div className="flex flex-col md:flex-row gap-4 mb-6">

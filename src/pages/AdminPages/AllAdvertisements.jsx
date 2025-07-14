@@ -2,6 +2,7 @@ import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import useAxiosSecure from "../../components/hooks/UseAxiosSecure";
 import Swal from "sweetalert2";
 import { toast } from "react-toastify";
+import { Helmet } from "react-helmet-async";
 
 const AllAdvertisements = () => {
   const axiosSecure = useAxiosSecure();
@@ -66,6 +67,9 @@ const AllAdvertisements = () => {
 
   return (
     <div className="max-w-6xl mx-auto p-4">
+      <Helmet>
+        <title>Admin Dashboard || All Advertisements</title>
+      </Helmet>
       <h2 className="text-2xl font-bold mb-4">📢 All Advertisements</h2>
 
       {isLoading ? (
@@ -89,7 +93,9 @@ const AllAdvertisements = () => {
                   <td>
                     <select
                       value={ad.status}
-                      onChange={(e) => handleStatusChange(ad._id, e.target.value)}
+                      onChange={(e) =>
+                        handleStatusChange(ad._id, e.target.value)
+                      }
                       className="select select-bordered select-sm"
                     >
                       <option value="pending">Pending</option>

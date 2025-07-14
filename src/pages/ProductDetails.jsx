@@ -16,6 +16,7 @@ import Loading from "./Loading";
 import { AuthContext } from "../Authentication/AuthProvider";
 import useAxios from "../components/hooks/useAxios";
 import useAxiosSecure from "../components/hooks/UseAxiosSecure";
+import { Helmet } from "react-helmet-async";
 
 const ProductDetails = () => {
   const { id } = useParams();
@@ -105,6 +106,11 @@ const ProductDetails = () => {
 
   return (
     <div className="max-w-5xl mx-auto p-4 mt-7 text-gray-800 dark:text-gray-100 bg-white dark:bg-gray-900 rounded-lg shadow-md">
+      
+      <Helmet>
+        <title>KachaBazar || Product Details</title>
+      </Helmet>
+
       <h2 className="text-2xl font-bold mb-2">{product.itemName}</h2>
       <img
         src={product.image}
@@ -116,12 +122,18 @@ const ProductDetails = () => {
       <p>👨‍🌾 Vendor: {product.vendorName}</p>
       <p className="text-xl font-semibold">💵 ৳{product.pricePerUnit} /kg</p>
 
-      {role !== "admin" && role !== "vendor" && (
+      {role === "user" && (
         <div className="flex gap-4 mt-4">
-          <button className="btn btn-outline dark:border-gray-600 dark:text-white" onClick={handleWatchlist}>
+          <button
+            className="btn btn-outline dark:border-gray-600 dark:text-white"
+            onClick={handleWatchlist}
+          >
             ⭐ Add to Watchlist
           </button>
-          <button className="btn btn-primary dark:text-white" onClick={handleBuy}>
+          <button
+            className="btn btn-primary dark:text-white"
+            onClick={handleBuy}
+          >
             🛒 Buy Product
           </button>
         </div>
@@ -166,7 +178,10 @@ const ProductDetails = () => {
           placeholder="Write your thoughts..."
           className="textarea textarea-bordered w-full dark:bg-gray-800 dark:text-white dark:border-gray-600"
         />
-        <button className="btn btn-success mt-2 dark:text-white" onClick={handleReview}>
+        <button
+          className="btn btn-success mt-2 dark:text-white"
+          onClick={handleReview}
+        >
           Submit Review
         </button>
       </div>
@@ -186,7 +201,9 @@ const ProductDetails = () => {
               key={r._id}
               className="border rounded p-3 mb-2 bg-gray-50 dark:bg-gray-800 dark:border-gray-600"
             >
-              <p className="font-medium">{r.userName} ({r.userEmail})</p>
+              <p className="font-medium">
+                {r.userName} ({r.userEmail})
+              </p>
               <p>⭐ {r.rating} / 5</p>
               <p className="text-sm text-gray-600 dark:text-gray-400">
                 {format(new Date(r.date), "PP")}

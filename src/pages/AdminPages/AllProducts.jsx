@@ -5,6 +5,7 @@ import { useState } from "react";
 import Swal from "sweetalert2";
 import { Link } from "react-router-dom";
 import RejectionModal from "./RejectionModal";
+import { Helmet } from "react-helmet-async";
 
 const AllProducts = () => {
   const axiosSecure = useAxiosSecure();
@@ -35,10 +36,13 @@ const AllProducts = () => {
   };
 
   const confirmReject = async (reason) => {
-    const res = await axiosSecure.patch(`/admin/products/${selectedProduct._id}`, {
-      status: "rejected",
-      rejectionReason: reason,
-    });
+    const res = await axiosSecure.patch(
+      `/admin/products/${selectedProduct._id}`,
+      {
+        status: "rejected",
+        rejectionReason: reason,
+      }
+    );
     if (res.data.modifiedCount) {
       toast.warn("Product rejected");
       refetch();
@@ -68,6 +72,9 @@ const AllProducts = () => {
 
   return (
     <div className="p-4">
+      <Helmet>
+        <title>Admin Dashboard || All Products</title>
+      </Helmet>
       <h2 className="text-2xl font-bold mb-4">📋 All Products</h2>
       <div className="overflow-x-auto">
         <table className="table">
@@ -86,7 +93,15 @@ const AllProducts = () => {
                 <td>{p.itemName}</td>
                 <td>{p.marketName}</td>
                 <td>
-                  <span className={`badge badge-${p.status === "approved" ? "success" : p.status === "pending" ? "warning" : "error"}`}>
+                  <span
+                    className={`badge badge-${
+                      p.status === "approved"
+                        ? "success"
+                        : p.status === "pending"
+                        ? "warning"
+                        : "error"
+                    }`}
+                  >
                     {p.status}
                   </span>
                 </td>
@@ -94,12 +109,32 @@ const AllProducts = () => {
                 <td className="space-x-2 space-y-1 grid md:grid-cols-2">
                   {p.status === "pending" && (
                     <>
-                      <button onClick={() => handleApprove(p._id)} className="btn btn-xs btn-success">Approve</button>
-                      <button onClick={() => handleReject(p)} className="btn btn-xs btn-error">Reject</button>
+                      <button
+                        onClick={() => handleApprove(p._id)}
+                        className="btn btn-xs btn-success"
+                      >
+                        Approve
+                      </button>
+                      <button
+                        onClick={() => handleReject(p)}
+                        className="btn btn-xs btn-error"
+                      >
+                        Reject
+                      </button>
                     </>
                   )}
-                  <Link to={`/dashboard/update-product/${p._id}`} className="btn btn-xs btn-info">Update</Link>
-                  <button onClick={() => handleDelete(p._id)} className="btn btn-xs btn-outline btn-error w-15 md:w-26">Delete</button>
+                  <Link
+                    to={`/dashboard/update-product/${p._id}`}
+                    className="btn btn-xs btn-info"
+                  >
+                    Update
+                  </Link>
+                  <button
+                    onClick={() => handleDelete(p._id)}
+                    className="btn btn-xs btn-outline btn-error w-15 md:w-26"
+                  >
+                    Delete
+                  </button>
                 </td>
               </tr>
             ))}

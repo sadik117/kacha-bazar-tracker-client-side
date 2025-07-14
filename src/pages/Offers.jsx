@@ -1,5 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import useAxios from "../components/hooks/useAxios";
+import { Helmet } from "react-helmet-async";
 
 const Offers = () => {
   const axios = useAxios();
@@ -25,6 +26,9 @@ const Offers = () => {
 
   return (
     <>
+      <Helmet>
+        <title>KachaBazar || Offers</title>
+      </Helmet>
       <h2 className="text-3xl font-bold mb-6 text-center mt-5">
         🎁 Special Market Offers
       </h2>

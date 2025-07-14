@@ -1,11 +1,16 @@
 import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../../components/hooks/UseAxiosSecure";
 import { format } from "date-fns";
+import { Helmet } from "react-helmet-async";
 
 const AllOrders = () => {
   const axiosSecure = useAxiosSecure();
 
-  const { data: orders = [], isLoading, isError } = useQuery({
+  const {
+    data: orders = [],
+    isLoading,
+    isError,
+  } = useQuery({
     queryKey: ["allOrders"],
     queryFn: async () => {
       const res = await axiosSecure.get("/admin/orders");
@@ -14,10 +19,14 @@ const AllOrders = () => {
   });
 
   if (isLoading) return <p className="text-center">Loading orders...</p>;
-  if (isError) return <p className="text-center text-red-500">Failed to load orders</p>;
+  if (isError)
+    return <p className="text-center text-red-500">Failed to load orders</p>;
 
   return (
     <div className="p-4 overflow-x-auto">
+      <Helmet>
+        <title>Admin Dashboard || All Orders</title>
+      </Helmet>
       <h2 className="text-2xl font-bold mb-4">📦 All Orders</h2>
       <table className="table w-full border">
         <thead>

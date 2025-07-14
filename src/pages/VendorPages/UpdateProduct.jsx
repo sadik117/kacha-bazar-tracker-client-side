@@ -123,6 +123,9 @@ const UpdateProduct = () => {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
     >
+      <Helmet>
+        <title>Vendor Dashboard || Update Product</title>
+      </Helmet>
       <div className="card bg-base-100 shadow-md p-6 space-y-4">
         <h2 className="text-2xl font-bold text-primary">Update Product</h2>
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">

@@ -6,6 +6,7 @@ import Swal from "sweetalert2";
 import { AuthContext } from "../../Authentication/AuthProvider";
 import useAxiosSecure from "../../components/hooks/UseAxiosSecure";
 import Loading from "../Loading";
+import { Helmet } from "react-helmet-async";
 
 const WatchLists = () => {
   const axiosSecure = useAxiosSecure();
@@ -59,6 +60,9 @@ const WatchLists = () => {
 
   return (
     <div className="max-w-6xl mx-auto p-4">
+      <Helmet>
+        <title>User Dashboard || Watchlist</title>
+      </Helmet>
       <h2 className="text-2xl font-bold mb-6">📋 Manage Watchlist</h2>
 
       {watchlist.length === 0 ? (

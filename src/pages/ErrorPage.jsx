@@ -3,6 +3,7 @@ import Lottie from "lottie-react";
 import { motion } from "framer-motion";
 import animationData from "../assets/error-animation.json";
 import { Link } from "react-router";
+import { Helmet } from "react-helmet-async";
 
 const ErrorPage = () => {
   return (
@@ -14,9 +15,9 @@ const ErrorPage = () => {
     >
       <div className="max-w-md w-full">
         
-        {/* <Helmet>
+        <Helmet>
           <title>Error || Book House</title>
-        </Helmet> */}
+        </Helmet>
 
         <Lottie animationData={animationData} loop={true} />
         <h1 className="text-3xl font-bold text-gray-800 mt-2">

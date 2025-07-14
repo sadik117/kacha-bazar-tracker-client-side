@@ -1,6 +1,7 @@
 import { useState } from "react";
 import useAxiosSecure from "../../components/hooks/UseAxiosSecure";
 import { toast } from "react-toastify";
+import { Helmet } from "react-helmet-async";
 
 const AddOffer = () => {
   const [title, setTitle] = useState("");
@@ -22,6 +23,9 @@ const AddOffer = () => {
 
   return (
     <div className="max-w-xl mx-auto p-4">
+      <Helmet>
+        <title>Admin Dashboard || Add Offer</title>
+      </Helmet>
       <h2 className="text-2xl font-bold mb-4">📢 Post New Offer</h2>
       <form onSubmit={handleSubmit} className="space-y-4">
         <input

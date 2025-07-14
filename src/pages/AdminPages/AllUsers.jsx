@@ -3,6 +3,7 @@ import useAxiosSecure from "../../components/hooks/UseAxiosSecure";
 import { toast } from "react-toastify";
 import { useState } from "react";
 import { debounce } from "lodash";
+import { Helmet } from "react-helmet-async";
 
 const AllUsers = () => {
   const axiosSecure = useAxiosSecure();
@@ -14,7 +15,11 @@ const AllUsers = () => {
     setSearchQuery(value);
   }, 500); // 500ms delay to avoid frequent calls
 
-  const { data: users = [], refetch, isFetching } = useQuery({
+  const {
+    data: users = [],
+    refetch,
+    isFetching,
+  } = useQuery({
     queryKey: ["allUsers", searchQuery],
     queryFn: async () => {
       const res = await axiosSecure.get(`/users?search=${searchQuery}`);
@@ -39,6 +44,9 @@ const AllUsers = () => {
 
   return (
     <div className="p-4 overflow-x-auto">
+      <Helmet>
+        <title>Admin Dashboard || All Users</title>
+      </Helmet>
       <h2 className="text-2xl font-bold mb-4">👥 All Users</h2>
 
       {/* 🔍 Search Input */}
@@ -65,11 +73,15 @@ const AllUsers = () => {
         <tbody>
           {isFetching ? (
             <tr>
-              <td colSpan="4" className="text-center py-4">Loading...</td>
+              <td colSpan="4" className="text-center py-4">
+                Loading...
+              </td>
             </tr>
           ) : users.length === 0 ? (
             <tr>
-              <td colSpan="4" className="text-center py-4 text-gray-500">No users found.</td>
+              <td colSpan="4" className="text-center py-4 text-gray-500">
+                No users found.
+              </td>
             </tr>
           ) : (
             users.map((user) => (
