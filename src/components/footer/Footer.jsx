@@ -6,6 +6,7 @@ import {
   FaLinkedin,
 } from "react-icons/fa";
 import { Link } from "react-router";
+import { MdDeveloperBoard } from "react-icons/md";
 
 const Footer = () => {
   return (
@@ -94,6 +95,9 @@ const Footer = () => {
       {/* Bottom Bar */}
       <div className="text-center text-sm mt-8 border-t border-base-300 pt-4">
         &copy; {new Date().getFullYear()} কাঁচাবাজার. All rights reserved.
+      </div>
+      <div className="text-start ml-4 md:ml-0 md:text-center text-sm text-black mt-6 md:mt-2">
+        <MdDeveloperBoard className="inline -mt-0.5"></MdDeveloperBoard> Developed by Sadik Sourov.
       </div>
     </footer>
   );

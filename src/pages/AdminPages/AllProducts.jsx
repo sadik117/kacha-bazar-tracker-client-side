@@ -3,22 +3,28 @@ import useAxiosSecure from "../../components/hooks/UseAxiosSecure";
 import { toast } from "react-toastify";
 import { useState } from "react";
 import Swal from "sweetalert2";
-import { Link } from "react-router-dom";
 import RejectionModal from "./RejectionModal";
 import { Helmet } from "react-helmet-async";
+import { Link } from "react-router";
 
 const AllProducts = () => {
   const axiosSecure = useAxiosSecure();
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [showRejectionModal, setShowRejectionModal] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const limit = 8;
 
-  const { data: products = [], refetch } = useQuery({
-    queryKey: ["adminAllProducts"],
+  const { data, refetch, isLoading } = useQuery({
+    queryKey: ["adminAllProducts", currentPage],
     queryFn: async () => {
-      const res = await axiosSecure.get("/admin/products");
+      const res = await axiosSecure.get(`/admin/products?page=${currentPage}&limit=${limit}`);
       return res.data;
     },
   });
+
+  const products = data?.products || [];
+  const totalCount = data?.totalCount || 0;
+  const totalPages = Math.ceil(totalCount / limit);
 
   const handleApprove = async (id) => {
     const res = await axiosSecure.patch(`/admin/products/${id}`, {
@@ -140,6 +146,21 @@ const AllProducts = () => {
             ))}
           </tbody>
         </table>
+      </div>
+
+      {/* Pagination */}
+      <div className="flex justify-center mt-6 space-x-2">
+        {[...Array(totalPages).keys()].map((num) => (
+          <button
+            key={num}
+            onClick={() => setCurrentPage(num + 1)}
+            className={`btn btn-sm ${
+              currentPage === num + 1 ? "btn-primary" : "btn-outline"
+            }`}
+          >
+            {num + 1}
+          </button>
+        ))}
       </div>
 
       {/* Rejection Modal */}

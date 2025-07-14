@@ -1,15 +1,15 @@
-// src/pages/VendorPages/UpdateProduct.jsx
 import React, { useEffect, useState, useContext } from "react";
 import { useForm, useFieldArray } from "react-hook-form";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import { useParams, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import useAxiosSecure from "../../components/hooks/UseAxiosSecure";
 import { AuthContext } from "../../Authentication/AuthProvider";
 import { motion } from "framer-motion";
 import axios from "axios";
 import useUserRole from "../../components/hooks/useUserRole";
+import { Helmet } from "react-helmet-async";
+import { useNavigate, useParams } from "react-router";
 
 const UpdateProduct = () => {
   const { id } = useParams();

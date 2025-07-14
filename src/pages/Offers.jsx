@@ -1,6 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import useAxios from "../components/hooks/useAxios";
 import { Helmet } from "react-helmet-async";
+import Loading from "./Loading";
 
 const Offers = () => {
   const axios = useAxios();
@@ -17,9 +18,7 @@ const Offers = () => {
 
   if (isLoading)
     return (
-      <p className="text-center text-gray-700 dark:text-gray-200">
-        Loading offers...
-      </p>
+      <Loading></Loading>
     );
   if (isError)
     return <p className="text-red-500 text-center">Error: {error?.message}</p>;

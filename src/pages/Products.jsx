@@ -1,5 +1,4 @@
 import { useEffect, useState, useContext } from "react";
-import { Link, useNavigate } from "react-router-dom";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { useQuery } from "@tanstack/react-query";
@@ -8,6 +7,7 @@ import useAxios from "../components/hooks/useAxios";
 import { AuthContext } from "../Authentication/AuthProvider";
 import Loading from "./Loading";
 import { Helmet } from "react-helmet-async";
+import { useNavigate } from "react-router";
 
 const Products = () => {
   const axiosInstance = useAxios();
