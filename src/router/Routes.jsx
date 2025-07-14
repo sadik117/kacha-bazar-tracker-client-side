@@ -24,6 +24,8 @@ import WatchLists from "../pages/UserPages/WatchLists";
 import MyOrders from "../pages/UserPages/MyOrders";
 import ProductDetails from "../pages/ProductDetails";
 import PaymentSuccess from "../pages/PaymentSuccess";
+import AddOffer from "../pages/AdminPages/AddOffer";
+import Offers from "../pages/Offers";
 
 
 export const router = createBrowserRouter([
@@ -66,6 +68,10 @@ export const router = createBrowserRouter([
       {
         path: "/payment-success",
         Component: PaymentSuccess
+      },
+      {
+        path: "/offers",
+        Component: Offers
       },
       {
         path: "/dashboard",
@@ -130,6 +136,12 @@ export const router = createBrowserRouter([
           path: "all-orders",
           element: <AdminRoute>
             <AllOrders></AllOrders>
+          </AdminRoute>
+         },
+         {
+          path: "add-offer",
+          element: <AdminRoute>
+            <AddOffer></AddOffer>
           </AdminRoute>
          },
          {

@@ -103,6 +103,9 @@ const DashboardLayout = () => {
               <NavLink to="/dashboard/all-orders" onClick={closeDrawer}>
                 🛒 All Orders
               </NavLink>
+              <NavLink to="/dashboard/add-offer" onClick={closeDrawer}>
+                🎁 Add Offer
+              </NavLink>
             </>
           )}
         </nav>

@@ -26,7 +26,6 @@ const ProductDetails = () => {
   const [comment, setComment] = useState("");
   const [rating, setRating] = useState(0);
 
-  // Fetch product details
   const { data: product, isLoading } = useQuery({
     queryKey: ["productDetails", id],
     queryFn: async () => {
@@ -35,7 +34,6 @@ const ProductDetails = () => {
     },
   });
 
-  // Fetch price history
   const { data: priceData = [] } = useQuery({
     queryKey: ["priceHistory", id],
     queryFn: async () => {
@@ -44,7 +42,6 @@ const ProductDetails = () => {
     },
   });
 
-  // Fetch reviews
   const {
     data: reviews = [],
     isLoading: loadingReviews,
@@ -57,7 +54,6 @@ const ProductDetails = () => {
     },
   });
 
-  // Add to Watchlist
   const handleWatchlist = async () => {
     try {
       await axiosSecure.post("/watchlist", {
@@ -70,7 +66,6 @@ const ProductDetails = () => {
     }
   };
 
-  // Buy Product
   const handleBuy = async () => {
     try {
       const res = await axiosSecure.post("/create-payment", {
@@ -78,14 +73,12 @@ const ProductDetails = () => {
         email: user.email,
         price: product.pricePerUnit,
       });
-
       window.location.href = res.data.url;
     } catch {
       toast.error("Payment initiation failed");
     }
   };
 
-  // Submit Review
   const handleReview = async () => {
     if (!rating || !comment.trim()) return toast.error("Fill both fields");
 
@@ -111,24 +104,24 @@ const ProductDetails = () => {
   if (isLoading) return <Loading />;
 
   return (
-    <div className="max-w-5xl mx-auto p-4">
+    <div className="max-w-5xl mx-auto p-4 mt-7 text-gray-800 dark:text-gray-100 bg-white dark:bg-gray-900 rounded-lg shadow-md">
       <h2 className="text-2xl font-bold mb-2">{product.itemName}</h2>
       <img
         src={product.image}
         alt=""
         className="w-full max-h-72 object-cover rounded"
       />
-      <p className="text-gray-600 dark:text-white mt-2">📅 {product.date}</p>
+      <p className="text-gray-600 dark:text-gray-400 mt-2">📅 {product.date}</p>
       <p>🏪 Market: {product.marketName}</p>
       <p>👨‍🌾 Vendor: {product.vendorName}</p>
       <p className="text-xl font-semibold">💵 ৳{product.pricePerUnit} /kg</p>
 
       {role !== "admin" && role !== "vendor" && (
         <div className="flex gap-4 mt-4">
-          <button className="btn btn-outline" onClick={handleWatchlist}>
+          <button className="btn btn-outline dark:border-gray-600 dark:text-white" onClick={handleWatchlist}>
             ⭐ Add to Watchlist
           </button>
-          <button className="btn btn-primary" onClick={handleBuy}>
+          <button className="btn btn-primary dark:text-white" onClick={handleBuy}>
             🛒 Buy Product
           </button>
         </div>
@@ -139,10 +132,17 @@ const ProductDetails = () => {
         <h3 className="text-xl font-semibold mb-2">📈 Price Trend</h3>
         <ResponsiveContainer width="100%" height={300}>
           <LineChart data={priceData}>
-            <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="date" />
-            <YAxis />
-            <Tooltip />
+            <CartesianGrid strokeDasharray="3 3" stroke="#555" />
+            <XAxis dataKey="date" tick={{ fill: "#ccc" }} />
+            <YAxis tick={{ fill: "#ccc" }} />
+            <Tooltip
+              contentStyle={{
+                backgroundColor: "#1f2937",
+                border: "none",
+                color: "#fff",
+              }}
+              labelStyle={{ color: "#fff" }}
+            />
             <Line type="monotone" dataKey="price" stroke="#10B981" />
           </LineChart>
         </ResponsiveContainer>
@@ -158,15 +158,15 @@ const ProductDetails = () => {
           value={rating}
           onChange={(e) => setRating(Number(e.target.value))}
           placeholder="Rating (1-5)"
-          className="input input-bordered w-full mb-2"
+          className="input input-bordered w-full mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600"
         />
         <textarea
           value={comment}
           onChange={(e) => setComment(e.target.value)}
           placeholder="Write your thoughts..."
-          className="textarea textarea-bordered w-full"
+          className="textarea textarea-bordered w-full dark:bg-gray-800 dark:text-white dark:border-gray-600"
         />
-        <button className="btn btn-success mt-2" onClick={handleReview}>
+        <button className="btn btn-success mt-2 dark:text-white" onClick={handleReview}>
           Submit Review
         </button>
       </div>
@@ -179,15 +179,16 @@ const ProductDetails = () => {
         {reviewsError && <p className="text-red-500">Failed to load reviews</p>}
 
         {reviews.length === 0 ? (
-          <p className="text-gray-500">No reviews yet.</p>
+          <p className="text-gray-500 dark:text-gray-400">No reviews yet.</p>
         ) : (
           reviews.map((r) => (
-            <div key={r._id} className="border rounded p-3 mb-2 bg-gray-50">
-              <p className="font-medium">
-                {r.userName} ({r.userEmail})
-              </p>
+            <div
+              key={r._id}
+              className="border rounded p-3 mb-2 bg-gray-50 dark:bg-gray-800 dark:border-gray-600"
+            >
+              <p className="font-medium">{r.userName} ({r.userEmail})</p>
               <p>⭐ {r.rating} / 5</p>
-              <p className="text-sm text-gray-600">
+              <p className="text-sm text-gray-600 dark:text-gray-400">
                 {format(new Date(r.date), "PP")}
               </p>
               <p>{r.comment}</p>
