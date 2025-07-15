@@ -27,6 +27,9 @@ import PaymentSuccess from "../pages/PaymentSuccess";
 import AddOffer from "../pages/AdminPages/AddOffer";
 import Offers from "../pages/Offers";
 import DashboardHome from "../components/Dashboard/DashboardHome";
+import TermsAndConditions from "../pages/TermsAndConditions";
+import ContactUs from "../pages/ContactUs";
+import AboutUs from "../pages/AboutUs";
 
 
 export const router = createBrowserRouter([
@@ -73,6 +76,18 @@ export const router = createBrowserRouter([
       {
         path: "/offers",
         Component: Offers
+      },
+      {
+        path: "/terms",
+        Component: TermsAndConditions
+      },
+      {
+        path: "/contact",
+        Component: ContactUs
+      },
+      {
+        path: "/about",
+        Component: AboutUs
       },
       {
         path: "/dashboard",
