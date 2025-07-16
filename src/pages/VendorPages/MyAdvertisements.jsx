@@ -12,13 +12,19 @@ const MyAdvertisements = () => {
   const axiosSecure = useAxiosSecure();
   const [editingAd, setEditingAd] = useState(null);
 
-  const { data: ads = [], refetch } = useQuery({
+  const {
+    data: ads = [],
+    refetch,
+    isLoading,
+    isError,
+  } = useQuery({
     queryKey: ["myAds", user?.email],
     queryFn: async () => {
-      const res = await axiosSecure.get(`/ads?vendor=${user.email}`);
+      const res = await axiosSecure.get(`/ads/vendor`);
       return res.data;
     },
-    refetchOnWindowFocus: true,
+    enabled: !!user?.email,
+    refetchOnWindowFocus: false,
     refetchOnMount: true,
   });
 
@@ -58,64 +64,78 @@ const MyAdvertisements = () => {
         📢 My Advertisements
       </h2>
 
-      <div className="overflow-x-auto shadow-md rounded-lg">
-        <table className="table w-full text-sm">
-          <thead className="bg-primary text-white text-base">
-            <tr>
-              <th className="p-3">Title</th>
-              <th className="p-3">Description</th>
-              <th className="p-3">Status</th>
-              <th className="p-3 text-center">Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {ads.map((ad) => (
-              <tr key={ad._id} className="hover:bg-gray-100 transition">
-                <td className="p-3 font-semibold">{ad.title}</td>
-                <td className="p-3">{ad.description}</td>
-                <td className="p-3">
-                  <span
-                    className={`badge ${
-                      ad.status === "approved"
-                        ? "badge-success"
-                        : ad.status === "rejected"
-                        ? "badge-error"
-                        : "badge-warning"
-                    }`}
-                  >
-                    {ad.status}
-                  </span>
-                </td>
-                <td className="p-3 text-center space-x-2">
-                  <button
-                    className="btn btn-sm btn-outline btn-primary p-2 mb-1"
-                    onClick={() => setEditingAd(ad)}
-                  >
-                    ✏️ Edit
-                  </button>
-                  <button
-                    className="btn btn-sm btn-error p-2"
-                    onClick={() => handleDelete(ad._id)}
-                  >
-                    🗑️ Delete
-                  </button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+      {isLoading && (
+        <div className="text-center py-10 text-lg font-semibold">
+          Loading advertisements...
+        </div>
+      )}
 
-        {ads.length === 0 && (
+      {isError && (
+        <div className="text-center text-red-500 font-semibold">
+          Failed to load advertisements.
+        </div>
+      )}
+
+      {!isLoading && ads.length > 0 ? (
+        <div className="overflow-x-auto shadow-md rounded-lg">
+          <table className="table w-full text-sm">
+            <thead className="bg-primary text-white text-base">
+              <tr>
+                <th className="p-3">Title</th>
+                <th className="p-3">Description</th>
+                <th className="p-3">Status</th>
+                <th className="p-3 text-center">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {ads.map((ad) => (
+                <tr key={ad._id} className="hover:bg-gray-100 transition">
+                  <td className="p-3 font-semibold">{ad.title}</td>
+                  <td className="p-3">{ad.description}</td>
+                  <td className="p-3">
+                    <span
+                      className={`badge ${
+                        ad.status === "approved"
+                          ? "badge-success"
+                          : ad.status === "rejected"
+                          ? "badge-error"
+                          : "badge-warning"
+                      }`}
+                    >
+                      {ad.status}
+                    </span>
+                  </td>
+                  <td className="p-3 text-center space-x-2">
+                    <button
+                      className="btn btn-sm btn-outline btn-primary p-2 mb-1"
+                      onClick={() => setEditingAd(ad)}
+                    >
+                      ✏️ Edit
+                    </button>
+                    <button
+                      className="btn btn-sm btn-error p-2"
+                      onClick={() => handleDelete(ad._id)}
+                    >
+                      🗑️ Delete
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      ) : (
+        !isLoading && (
           <div className="text-center py-6 text-gray-500">
             No advertisements found.
           </div>
-        )}
-      </div>
+        )
+      )}
 
       {/* Edit Modal */}
       {editingAd && (
-        <div className="fixed inset-0 bg-black bg-opacity-40 flex justify-center items-center z-50">
-          <div className="bg-white rounded p-6 max-w-xl w-full relative">
+        <div className="fixed inset-0 bg-black bg-opacity-40 flex justify-center items-center z-50 p-4 sm:p-6">
+          <div className="bg-white rounded p-6 max-w-xl w-full max-h-[90vh] overflow-y-auto relative">
             <button
               className="absolute right-2 top-2 text-xl"
               onClick={() => setEditingAd(null)}

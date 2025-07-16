@@ -1,17 +1,12 @@
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
-import { useEffect, useState, useContext } from "react";
-import useAxiosSecure from "../../components/hooks/UseAxiosSecure";
+import { useEffect, useMemo, useState, useContext } from "react";
 import axios from "axios";
-import { AuthContext } from "../../Authentication/AuthProvider";
 import { Helmet } from "react-helmet-async";
+import { AuthContext } from "../../Authentication/AuthProvider";
+import useAxiosSecure from "../../components/hooks/UseAxiosSecure";
 
-const AddAdvertisement = ({
-  onClose,
-  refetch,
-  defaultValues = {},
-  isEdit = false,
-}) => {
+const AddAdvertisement = ({ onClose, refetch, defaultValues = {}, isEdit = false }) => {
   const { user } = useContext(AuthContext);
   const axiosSecure = useAxiosSecure();
   const [uploading, setUploading] = useState(false);
@@ -19,8 +14,9 @@ const AddAdvertisement = ({
   const {
     register,
     handleSubmit,
-    setValue,
     reset,
+    setValue,
+    watch,
     formState: { errors },
   } = useForm({
     defaultValues: {
@@ -32,23 +28,39 @@ const AddAdvertisement = ({
     },
   });
 
-  // Reset form values when defaultValues change
-  useEffect(() => {
+  // Memoize default form values to prevent infinite loops
+  const memoizedDefaults = useMemo(() => {
     if (defaultValues && Object.keys(defaultValues).length > 0) {
-      reset({
+      return {
         title: defaultValues.title || "",
         description: defaultValues.description || "",
         image: defaultValues.image || "",
         status: defaultValues.status || "pending",
         email: defaultValues.email || user?.email || "",
-      });
+      };
     } else {
-      reset({
-        email: user?.email || "",
+      return {
+        title: "",
+        description: "",
+        image: "",
         status: "pending",
-      });
+        email: user?.email || "",
+      };
     }
-  }, [defaultValues, reset, user]);
+  }, [defaultValues, user]);
+
+  useEffect(() => {
+  if (isEdit && defaultValues && Object.keys(defaultValues).length > 0) {
+    reset({
+      title: defaultValues.title || "",
+      description: defaultValues.description || "",
+      image: defaultValues.image || "",
+      status: defaultValues.status || "pending",
+      email: defaultValues.email || user?.email || "",
+    });
+  }
+}, [isEdit, defaultValues?._id, reset]);
+
 
   const uploadImage = async (file) => {
     const formData = new FormData();
@@ -56,18 +68,17 @@ const AddAdvertisement = ({
     setUploading(true);
     try {
       const res = await axios.post(
-        `https://api.imgbb.com/1/upload?key=${
-          import.meta.env.VITE_IMGBB_API_KEY
-        }`,
+        `https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_IMGBB_API_KEY}`,
         formData
       );
       const url = res.data?.data?.url;
       if (url) {
         setValue("image", url);
-        toast.success("Image uploaded");
+        toast.success("Image uploaded successfully");
       }
       return url;
-    } catch {
+    } catch (error) {
+      console.error(error);
       toast.error("Image upload failed");
       return null;
     } finally {
@@ -89,7 +100,7 @@ const AddAdvertisement = ({
       } else {
         const res = await axiosSecure.post("/ads", {
           ...data,
-          email: user.email,
+          email: user?.email,
           status: "pending",
         });
         if (res.data.insertedId) {
@@ -99,66 +110,84 @@ const AddAdvertisement = ({
           onClose?.();
         }
       }
-    } catch (err) {
-      console.error(err);
-      toast.error("Error saving advertisement");
+    } catch (error) {
+      console.error(error);
+      toast.error("Something went wrong while saving");
     }
   };
+
+  const imageUrl = watch("image");
 
   return (
     <>
       <Helmet>
-        <title>Vendor Dashboard || Add Advertisement</title>
+        <title>{isEdit ? "Edit Advertisement" : "Add Advertisement"} | Vendor Dashboard</title>
       </Helmet>
-      <form onSubmit={handleSubmit(onSubmit)} className="space-y-3 p-4">
+
+      <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 bg-white dark:bg-gray-900 p-6 rounded-xl shadow-lg max-w-xl mx-auto">
         {/* Vendor Email */}
-        <input
-          {...register("email")}
-          readOnly
-          value={user?.email || ""}
-          className="input input-bordered w-full"
-          placeholder="Vendor Email"
-        />
+        <div>
+          <label className="label">Vendor Email</label>
+          <input
+            {...register("email")}
+            readOnly
+            className="input input-bordered w-full dark:bg-gray-800 dark:text-white"
+          />
+        </div>
 
         {/* Title */}
-        <input
-          {...register("title", { required: "Title is required" })}
-          placeholder="Ad Title"
-          className="input input-bordered w-full"
-        />
-        {errors.title && (
-          <p className="text-red-500 text-sm">{errors.title.message}</p>
-        )}
+        <div>
+          <label className="label">Ad Title</label>
+          <input
+            {...register("title", { required: "Title is required" })}
+            placeholder="Enter ad title"
+            className="input input-bordered w-full dark:bg-gray-800 dark:text-white"
+          />
+          {errors.title && <p className="text-red-500 text-sm">{errors.title.message}</p>}
+        </div>
 
         {/* Description */}
-        <textarea
-          {...register("description", { required: "Description is required" })}
-          placeholder="Short Description"
-          className="textarea textarea-bordered w-full"
-        />
-        {errors.description && (
-          <p className="text-red-500 text-sm">{errors.description.message}</p>
-        )}
+        <div>
+          <label className="label">Description</label>
+          <textarea
+            {...register("description", { required: "Description is required" })}
+            placeholder="Enter description"
+            className="textarea textarea-bordered w-full dark:bg-gray-800 dark:text-white"
+          />
+          {errors.description && <p className="text-red-500 text-sm">{errors.description.message}</p>}
+        </div>
 
         {/* Image Upload */}
-        <input
-          type="file"
-          accept="image/*"
-          onChange={async (e) => {
-            if (e.target.files.length > 0) {
-              await uploadImage(e.target.files[0]);
-            }
-          }}
-          className="file-input file-input-bordered w-full"
-        />
-        {uploading && (
-          <p className="text-yellow-500 text-sm">Uploading image...</p>
+        <div>
+          <label className="label">Upload Image</label>
+          <input
+            type="file"
+            accept="image/*"
+            onChange={async (e) => {
+              if (e.target.files.length > 0) {
+                await uploadImage(e.target.files[0]);
+              }
+            }}
+            className="file-input file-input-bordered w-full"
+          />
+          {uploading && <p className="text-yellow-500 text-sm mt-1">Uploading image...</p>}
+        </div>
+
+        {/* Image Preview */}
+        {imageUrl && (
+          <div className="mt-4">
+            <img
+              src={imageUrl}
+              alt="Ad Preview"
+              className="rounded-lg w-full max-h-[300px] object-contain border shadow"
+            />
+          </div>
         )}
 
-        {/* Submit */}
+        {/* Submit Button */}
         <button
           type="submit"
-          className="btn btn-primary w-full mt-2"
+          className="btn btn-primary w-full mt-4"
           disabled={uploading}
         >
           {isEdit ? "Update Advertisement" : "Create Advertisement"}

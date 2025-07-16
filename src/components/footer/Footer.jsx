@@ -10,7 +10,7 @@ import { MdDeveloperBoard } from "react-icons/md";
 
 const Footer = () => {
   return (
-    <footer className="mx-2 md:mx-10 bg-secondary text-base-content px-4 py-10 mt-10">
+    <footer className="mx-2 md:mx-10 bg-secondary text-base-content px-4 py-10 mt-4">
       <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
         {/* Brand & Description */}
         <div className="mx-0 md:mx-5">

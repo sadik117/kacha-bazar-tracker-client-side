@@ -5,6 +5,7 @@ import { toast } from "react-toastify";
 import useAxiosSecure from "../../components/hooks/UseAxiosSecure";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { Link } from "react-router";
+import { Helmet } from "react-helmet-async";
 
 const MyProducts = () => {
   const { user } = useContext(AuthContext);
