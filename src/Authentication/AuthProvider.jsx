@@ -67,7 +67,7 @@ const AuthProvider = ({ children }) => {
 
       if (currentUser) {
         try {
-          const res = await fetch("http://localhost:3000/jwt", {
+          const res = await fetch("https://kacha-bazar-tracker.vercel.app/jwt", {
             method: "POST",
             headers: {
               "Content-Type": "application/json",

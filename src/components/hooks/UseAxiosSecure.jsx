@@ -5,7 +5,7 @@ import { useNavigate } from "react-router";
 
 // Create a secure Axios instance
 const axiosSecure = axios.create({
-  baseURL: "http://localhost:3000", 
+  baseURL: "https://kacha-bazar-tracker.vercel.app", 
 });
 
 const useAxiosSecure = () => {
