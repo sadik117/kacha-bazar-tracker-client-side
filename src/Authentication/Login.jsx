@@ -4,9 +4,9 @@ import { toast } from "react-toastify";
 import Lottie from "lottie-react";
 import loginAnimation from "../assets/login.json";
 import { AuthContext } from "./AuthProvider";
-import { Link, useLocation, useNavigate } from "react-router";
 import SocialLogin from "./SocialLogin";
 import useAxios from "../components/hooks/useAxios";
+import {Link, useLocation, useNavigate } from "react-router";
 
 
 export default function Login() {
@@ -17,7 +17,7 @@ export default function Login() {
   const location = useLocation();
   const axios = useAxios();
 
-  const from = location.state?.from || "/";
+  const from = location.state?.from?.pathname || "/";
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -35,7 +35,7 @@ export default function Login() {
 
       setUser(user);
       toast.success("Login successful!");
-      navigate(from);
+      navigate(from, { replace: true });
     } catch (error) {
       toast.error("Login failed! " + error.message);
     }

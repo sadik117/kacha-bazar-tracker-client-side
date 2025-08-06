@@ -1,15 +1,14 @@
 import React, { useContext } from "react";
 import { AuthContext } from "./AuthProvider";
-import { useLocation, useNavigate } from "react-router";
 import { motion } from "framer-motion";
 import useAxios from "../components/hooks/useAxios";
-
+import { useLocation, useNavigate } from "react-router";
 
 const SocialLogin = () => {
   const { googleSignIn, setUser } = useContext(AuthContext);
   const location = useLocation();
   const navigate = useNavigate();
-  const from = location.state?.from || "/";
+  const from = location.state?.from?.pathname || "/";
   const axios = useAxios();
 
   const handleGoogleSignIn = async () => {
@@ -43,7 +42,9 @@ const SocialLogin = () => {
       setUser(user);
 
       // Navigate to intended page or home
-      navigate(from);
+      navigate(from, { replace: true });
+      // In Login.jsx
+
     } catch (error) {
       console.error("Google sign-in failed:", error);
     }
