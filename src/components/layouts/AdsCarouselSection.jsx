@@ -5,7 +5,7 @@ import "swiper/css";
 import "swiper/css/pagination";
 import useAxios from "../hooks/useAxios";
 
-const AdsCarousel = () => {
+const AdsCarouselSection = () => {
   const axios = useAxios();
 
   const { data: ads = [], isLoading } = useQuery({
@@ -70,4 +70,4 @@ const AdsCarousel = () => {
   );
 };
 
-export default AdsCarousel;
+export default AdsCarouselSection;

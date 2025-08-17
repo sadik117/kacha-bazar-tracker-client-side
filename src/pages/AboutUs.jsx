@@ -5,7 +5,7 @@ const AboutUs = () => {
   return (
     <div className="bg-white dark:bg-gray-900 text-gray-800 dark:text-gray-200 min-h-screen py-12 px-6">
       <Helmet>
-        <title>About Us | কাঁচাবাজার</title>
+        <title>About Us || কাঁচাবাজার</title>
       </Helmet>
 
       <div className="max-w-4xl mx-auto text-center">
@@ -57,10 +57,6 @@ const AboutUs = () => {
             <li>🚀 Express.js, MongoDB, TanStack Query</li>
           </ul>
         </motion.div>
-
-        <div className="mt-10 text-gray-600 dark:text-gray-400 text-sm">
-          &copy; {new Date().getFullYear()} কাঁচাবাজার. All rights reserved.
-        </div>
       </div>
     </div>
   );
