@@ -29,7 +29,7 @@ const ProductSection = () => {
 
   return (
     <>
-      <h2 className="text-3xl font-bold text-center mb-1 mt-10">
+      <h2 className="text-2xl md:text-3xl font-bold text-center mb-1 mt-10">
         🛍️ Latest Market Prices
       </h2>
     <section className="max-w-6xl mx-auto py-10 px-4 md:px-10 text-gray-800 dark:text-gray-100">
