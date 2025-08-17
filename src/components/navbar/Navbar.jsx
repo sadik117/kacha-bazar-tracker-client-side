@@ -36,30 +36,72 @@ const Navbar = () => {
 
   const navLinks = (
     <>
-      <li><NavLink to="/" className="text-black text-sm hover:text-primary">Home</NavLink></li>
-      <li><NavLink to="/products" className="text-black text-sm hover:text-primary">All Products</NavLink></li>
-      <li><NavLink to="/offers" className="text-black text-sm hover:text-primary">Offers</NavLink></li>
+      <li>
+        <NavLink to="/" className="text-black text-sm hover:text-primary">
+          Home
+        </NavLink>
+      </li>
+      <li>
+        <NavLink
+          to="/products"
+          className="text-black text-sm hover:text-primary"
+        >
+          All Products
+        </NavLink>
+      </li>
+      <li>
+        <NavLink to="/about" className="text-black text-sm hover:text-primary">
+          About Us
+        </NavLink>
+      </li>
       {user && (
-        <li><NavLink to="/dashboard" className="text-black text-sm hover:text-primary">Dashboard</NavLink></li>
+        <>
+          <li>
+            <NavLink
+              to="/offers"
+              className="text-black text-sm hover:text-primary"
+            >
+              Offers
+            </NavLink>
+          </li>
+          <li>
+            <NavLink
+              to="/dashboard"
+              className="text-black text-sm hover:text-primary"
+            >
+              Dashboard
+            </NavLink>
+          </li>
+        </>
       )}
     </>
   );
 
   return (
     <motion.header
-      className="bg-base-100 mx-2 md:mx-10 dark:bg-neutral text-neutral-content shadow-md sticky top-0 z-50"
+      className="bg-base-100 dark:bg-neutral text-neutral-content shadow-md sticky top-0 z-50"
       initial={{ y: -80 }}
       animate={{ y: 0 }}
       transition={{ duration: 0.4 }}
     >
-      <div className="max-w-7xl mx-auto bg-secondary px-4 py-3 flex justify-between items-center">
+      <div className="max-w-7xl mx-auto bg-gradient-to-r from-green-300 to-orange-200 px-3 md:px-9 py-3 flex justify-between items-center">
         {/* Logo */}
-        <Link to="/" className="text-2xl font-bold text-primary dark:text-secondary flex items-center gap-2">
-          <img className="w-6 md:w-10" src="https://i.ibb.co/FLM5DLmm/vegetable.png" alt="logo" /> <span className="text-sm md:text-lg">কাঁচাবাজার</span>
+        <Link
+          to="/"
+          className="text-2xl font-bold text-primary dark:text-secondary flex items-center gap-2"
+        >
+          <img
+            className="w-6 md:w-10"
+            src="https://i.ibb.co/FLM5DLmm/vegetable.png"
+            alt="logo"
+          />{" "}
+          <span className="text-sm md:text-lg">কাঁচাবাজার</span>
         </Link>
 
         {/* Desktop Menu */}
-        <ul className="hidden md:flex items-center gap-6 font-medium">{navLinks}</ul>
+        <ul className="hidden md:flex items-center gap-6 font-medium">
+          {navLinks}
+        </ul>
 
         {/* Right Side */}
         <div className="flex items-center gap-2">
@@ -80,14 +122,27 @@ const Navbar = () => {
                 alt="Profile"
                 className="w-9 h-9 rounded-full ring ring-primary ring-offset-2"
               />
-              <button onClick={logOut} className="btn btn-sm btn-outline text-primary hover:bg-primary hover:text-white">
+              <button
+                onClick={logOut}
+                className="btn btn-sm btn-outline text-primary hover:bg-primary hover:text-white"
+              >
                 Logout
               </button>
             </>
           ) : (
             <>
-              <NavLink to="/auth/login" className="btn btn-sm btn-ghost text-black">Login</NavLink>
-              <NavLink to="/auth/signup" className="btn btn-sm btn-primary text-white">Sign Up</NavLink>
+              <NavLink
+                to="/auth/login"
+                className="btn btn-sm btn-ghost text-black"
+              >
+                Login
+              </NavLink>
+              <NavLink
+                to="/auth/signup"
+                className="btn btn-sm btn-primary text-white"
+              >
+                Sign Up
+              </NavLink>
             </>
           )}
 
