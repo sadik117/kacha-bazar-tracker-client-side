@@ -6,6 +6,7 @@ import AdsCarousel from "./AdsCarousel";
 import AppStatsSection from "./AppStatsSection";
 import Pricing from "./Pricing";
 import ReviewSection from "./ReviewSection";
+import NewsletterSection from "./NewsLetterSection";
 
 const Home = () => {
   return (
@@ -19,6 +20,7 @@ const Home = () => {
       <ReviewSection></ReviewSection>
       <Pricing></Pricing>
       <AppStatsSection></AppStatsSection>
+      <NewsletterSection></NewsletterSection>
     </div>
   );
 };
