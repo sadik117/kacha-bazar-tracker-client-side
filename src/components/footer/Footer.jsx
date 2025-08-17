@@ -10,7 +10,7 @@ import { MdDeveloperBoard } from "react-icons/md";
 
 const Footer = () => {
   return (
-    <footer className="mx-2 md:mx-10 bg-secondary text-base-content px-4 py-10 mt-4">
+    <footer className="bg-gradient-to-r from-green-300 to-orange-200  text-base-content px-4 py-10 mt-4">
       <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
         {/* Brand & Description */}
         <div className="mx-0 md:mx-5">
@@ -91,7 +91,7 @@ const Footer = () => {
       <div className="text-center text-sm mt-8 border-t border-base-300 pt-4">
         &copy; {new Date().getFullYear()} কাঁচাবাজার. All rights reserved.
       </div>
-      <div className="text-start ml-4 md:ml-0 md:text-center text-sm text-black mt-6 md:mt-2">
+      <div className="text-start ml-20 md:ml-0 md:text-center text-sm text-black mt-2 md:mt-2">
         <MdDeveloperBoard className="inline -mt-0.5"></MdDeveloperBoard> Developed by Sadik Sourov.
       </div>
     </footer>
