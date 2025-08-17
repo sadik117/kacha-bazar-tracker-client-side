@@ -5,6 +5,7 @@ import { Helmet } from "react-helmet-async";
 import AdsCarousel from "./AdsCarousel";
 import AppStatsSection from "./AppStatsSection";
 import Pricing from "./Pricing";
+import ReviewSection from "./ReviewSection";
 
 const Home = () => {
   return (
@@ -15,6 +16,7 @@ const Home = () => {
       <Banner></Banner>
       <ProductSection></ProductSection>
       <AdsCarousel></AdsCarousel>
+      <ReviewSection></ReviewSection>
       <Pricing></Pricing>
       <AppStatsSection></AppStatsSection>
     </div>
