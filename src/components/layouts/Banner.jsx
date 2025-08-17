@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 const Banner = () => {
   return (
     <section
-      className="relative bg-cover bg-center bg-no-repeat min-h-[380px] flex items-center mx-2 md:mx-10"
+      className="relative bg-cover bg-center bg-no-repeat min-h-[380px] flex items-center mx-2 md:mx-10 mt-2"
       style={{
         backgroundImage:
           "url('https://i.ibb.co/ynKVV7MJ/jacopo-maiarelli-g-OUx23-DNks-unsplash.jpg')",

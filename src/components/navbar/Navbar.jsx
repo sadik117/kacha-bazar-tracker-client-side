@@ -84,7 +84,7 @@ const Navbar = () => {
       animate={{ y: 0 }}
       transition={{ duration: 0.4 }}
     >
-      <div className="max-w-7xl mx-auto bg-gradient-to-r from-green-300 to-orange-200 px-3 md:px-9 py-3 flex justify-between items-center">
+      <div className="max-w-7xl mx-auto bg-gradient-to-r from-green-300 to-orange-200 px-3 md:px-10 py-3 flex justify-between items-center">
         {/* Logo */}
         <Link
           to="/"
