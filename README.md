@@ -1,12 +1,49 @@
-# React + Vite
+# 🥬 কাঁচাবাজার | Daily Price Tracker for Local Markets
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A full-stack web application that empowers consumers to track local market prices, compare products, and make informed purchases. Vendors can list products and ads, while admins oversee the platform. Built using **MERN Stack** with **JWT Auth**, **Stripe Payments**, and **role-based dashboards**.
 
-Currently, two official plugins are available:
+🔗 **Live Site:** [https://kacha-bazar-tracker.netlify.app](https://kacha-bazar-tracker.netlify.app)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+---
 
-## Expanding the ESLint configuration
+## 🚀 Features
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+### 👥 User Roles
+- **User:** View products, track price trends, manage watchlist, and place orders.
+- **Vendor:** Add/update products, run advertisements, and manage listings.
+- **Admin:** Manage all users, products, ads, and approve/reject content.
+
+### 📦 Core Functionality
+- 🔍 **Real-time Market Price Comparison**  
+- 💾 **Watchlist** (save products for later)
+- 📊 **Price History Graphs** (Recharts)
+- 💳 **Stripe Integration** (secure checkout)
+- 🛒 **Order Management System**
+- 📢 **Vendor Advertisement Panel**
+- ✅ **Admin Approval System** (products & ads)
+- 🔐 **JWT Authentication** with Firebase Login
+- ⚙️ **Role-based Dashboards**
+
+---
+
+## 🛠️ Tech Stack
+
+### Frontend
+- **React.js**
+- **Tailwind CSS**
+- **Framer Motion**
+- **React Router**
+- **React Query (TanStack)**
+- **Recharts** (graphs)
+- **SweetAlert2**, **React-Toastify**, **Lottie**
+
+### Backend
+- **Node.js**
+- **Express.js**
+- **MongoDB (Atlas)**
+- **Firebase Auth**
+- **Stripe Payments**
+- **JWT & Middleware for Role Protection**
+
+---
+
